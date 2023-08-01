@@ -1,4 +1,4 @@
-namespace Ability 
+namespace AbilitySystem
 { 
     public enum EAbilityType
     {
