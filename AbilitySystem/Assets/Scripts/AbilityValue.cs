@@ -6,18 +6,30 @@ namespace AbilitySystem.Mutable
     public class AbilityValue
     {
         // --------------------------------------------------
+        // Variables
+        // --------------------------------------------------
+        private List<float>  _valueSet = new List<float>();
+
+        // --------------------------------------------------
         // Properties
         // --------------------------------------------------
-        public EAbilityType Type  { get; private set; } = EAbilityType.Unknown;
-        public float        Value { get; private set; } = 0.0f;
+        public EAbilityType Type         { get; private set; } = EAbilityType.Unknown;
+        public float        CurrentValue
+        {
+            get
+            {
+                var lastIndex = _valueSet.Count;
+                return _valueSet[lastIndex];
+            }
+        }
 
         // --------------------------------------------------
         // Constuctor
         // --------------------------------------------------
         public AbilityValue ( EAbilityType type, float value )
         {
-            Type  = type;
-            Value = value;
+            Type = type;
+            _valueSet.Add( value );
         }
 
         // --------------------------------------------------
@@ -25,8 +37,8 @@ namespace AbilitySystem.Mutable
         // --------------------------------------------------
         // ----- Public
         public void Set(float value) 
-        { 
-            
+        {
+            _valueSet.Add(value);
         }
 
         public void Revert() 
