@@ -1,55 +1,44 @@
 // ----- C#
 using System.Collections.Generic;
 
-namespace AbilitySystem.Mutable
+namespace InGame.ForAbility
 {
     public class AbilityValue
     {
         // --------------------------------------------------
         // Variables
         // --------------------------------------------------
-        private List<float>  _valueSet = new List<float>();
+        private float _originValue = 0f;
 
         // --------------------------------------------------
         // Properties
         // --------------------------------------------------
-        public EAbilityType Type         { get; private set; } = EAbilityType.Unknown;
-        public float        CurrentValue
+        public EAbilityType Type
+        { 
+            get; 
+            private set; 
+        } = EAbilityType.Unknown;
+
+        public float Value
         {
-            get
-            {
-                var lastIndex = _valueSet.Count;
-                return _valueSet[lastIndex];
-            }
-        }
+            get;
+            private set;
+        } = 0.0f;
 
         // --------------------------------------------------
         // Constuctor
         // --------------------------------------------------
         public AbilityValue ( EAbilityType type, float value )
         {
-            Type = type;
-            _valueSet.Add( value );
+            Type         = type;
+            Value        = value;
+            _originValue = value;
         }
 
         // --------------------------------------------------
         // Functions - Nomal
         // --------------------------------------------------
         // ----- Public
-        public void Set(float value) 
-        {
-            _valueSet.Add(value);
-        }
-
-        public void Revert() 
-        { 
-        
-        }
-
-        // ----- Private
-        private void _Remove() 
-        { 
-
-        }
+        public void Change(float value) { Value = value; }
     }
 }

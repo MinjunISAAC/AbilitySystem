@@ -1,9 +1,9 @@
-namespace AbilitySystem
+namespace InGame.ForAbility
 { 
     public enum EAbilityType
     {
         Unknown = 0,
-        Power   = 1,
+        Size    = 1,
         Speed   = 2,
     }
 }
