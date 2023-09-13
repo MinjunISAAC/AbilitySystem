@@ -1,0 +1,13 @@
+{
+  "DataSet":
+  [
+    {
+      "Type": "Speed",
+      "DefaultValue": 5
+    },
+    {
+      "Type": "Size",
+      "DefaultValue": 1
+    }
+  ]
+}

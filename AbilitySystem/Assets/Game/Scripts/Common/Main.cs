@@ -1,4 +1,5 @@
 // ----- C#
+using JsonUtil;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -29,6 +30,8 @@ namespace InGame
 
         private IEnumerator Start()
         {
+            // Json Data Load
+            JsonLoader.LoadJson();
 
             yield return null;
         }

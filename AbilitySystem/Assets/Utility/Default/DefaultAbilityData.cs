@@ -9,8 +9,8 @@ namespace Utility.ForDefault
     [System.Serializable]
     public class DefaultAbilityData
     {
-        public EAbilityType Type;
-        public float        DefaultValue;
+        public string Type;
+        public float  DefaultValue;
     }
 
     [System.Serializable]

@@ -10,7 +10,7 @@ using Utility.ForDefault;
 
 namespace JsonUtil
 {
-    public static class JsonParser
+    public static class JsonLoader
     {
         // --------------------------------------------------
         // Variables
