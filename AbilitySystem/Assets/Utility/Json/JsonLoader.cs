@@ -8,7 +8,7 @@ using UnityEngine;
 // ----- User Defined
 using Utility.ForDefault;
 
-namespace JsonUtil
+namespace Utility.JsonUtil
 {
     public static class JsonLoader
     {

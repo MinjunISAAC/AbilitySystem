@@ -1,10 +1,14 @@
 // ----- C#
-using JsonUtil;
 using System.Collections;
 using System.Collections.Generic;
 
 // ----- Unity
 using UnityEngine;
+
+// ----- User Defined
+using Utility.JsonUtil;
+using InGame.ForUnit;
+using InGame.ForUnit.Manage;
 
 namespace InGame
 {
@@ -13,6 +17,9 @@ namespace InGame
         // --------------------------------------------------
         // Components
         // --------------------------------------------------
+        [Header("Unit Group")]
+        [SerializeField] private Unit           _unitOrigin     = null;
+        [SerializeField] private UnitController _unitController = null;
 
         // --------------------------------------------------
         // Properties
@@ -32,6 +39,9 @@ namespace InGame
         {
             // Json Data Load
             JsonLoader.LoadJson();
+
+            // Unit Setting
+            _unitController.CreateTargetUnit(_unitOrigin);
 
             yield return null;
         }
