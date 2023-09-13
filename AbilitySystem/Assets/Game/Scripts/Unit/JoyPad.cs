@@ -61,6 +61,20 @@ namespace InGame.ForUnit.Manage.ForUI
                 OnUsedJoyStickEvent(isUsed);
         }
 
+        public event Action onMouseDownEvent;
+        public void OnMouseDown_Event()
+        {
+            if (onMouseDownEvent != null)
+                onMouseDownEvent();
+        }
+
+        public event Action onMouseUpEvent;
+        public void OnMouseUp_Event()
+        {
+            if (onMouseUpEvent != null)
+                onMouseUpEvent();
+        }
+
         // --------------------------------------------------
         // Function - Event
         // --------------------------------------------------
@@ -73,7 +87,9 @@ namespace InGame.ForUnit.Manage.ForUI
 
                 _isDragging         = true;
                 _frameRect.position = Input.mousePosition;
-                
+
+                OnMouseDown_Event();
+
                 _OnTouch(Input.mousePosition);
             }
 
@@ -95,6 +111,8 @@ namespace InGame.ForUnit.Manage.ForUI
                 _isDragging = false;
 
                 _targetUnit.UnitRigidBody.velocity = Vector3.zero;
+                
+                OnMouseUp_Event();
                 
                 _frameRect.gameObject.SetActive(false);
                 

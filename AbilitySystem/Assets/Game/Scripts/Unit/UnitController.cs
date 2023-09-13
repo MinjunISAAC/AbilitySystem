@@ -17,7 +17,7 @@ namespace InGame.ForUnit.Manage
         // Components
         // --------------------------------------------------
         [Header("Joy Pad")]
-        [SerializeField] private JoyPad    _joyPad            = null;
+        [SerializeField] private JoyPad _joyPad = null;
 
         [Header("Unit Collection")]
         [SerializeField] private Transform _unitCreateParents = null;
@@ -57,7 +57,18 @@ namespace InGame.ForUnit.Manage
 
             SetJoyPad();
 
+            // Unit Animate ÃÊ±âÈ­
+            _joyPad.onMouseDownEvent += () => { ChangeToUnitState(Unit.EState.Run);  };
+            _joyPad.onMouseUpEvent   += () => { ChangeToUnitState(Unit.EState.Idle); };
             return _targetUnit;
+        }
+
+        public void ChangeToUnitState(Unit.EState unitState, Action doneCallBack = null)
+        {
+            if (_targetUnit == null)
+                return;
+
+            _targetUnit.ChangeToUnitState(unitState, doneCallBack);
         }
 
         public void SetJoyPad()
