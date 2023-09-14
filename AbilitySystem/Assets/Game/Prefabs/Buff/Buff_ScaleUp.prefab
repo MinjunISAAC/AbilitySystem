@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2069ce0613d0415479e2686f94e2d6ac, type: 2}
+  - {fileID: 2100000, guid: 5a9549c693b7951409804240b9339291, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,11 +92,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9221968821214114883}
-  - component: {fileID: 3158838142141053953}
+  - component: {fileID: 755825243591469940}
   - component: {fileID: 9221968821214114880}
   - component: {fileID: 9221968821214114881}
   m_Layer: 7
-  m_Name: Buff_SpeedUp
+  m_Name: Buff_ScaleUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,7 +118,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3158838142141053953
+--- !u!114 &755825243591469940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ad8fe5eb15c174a8ae6de5306d48bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buffType: 2
+  _buffType: 1
 --- !u!136 &9221968821214114880
 CapsuleCollider:
   m_ObjectHideFlags: 0
