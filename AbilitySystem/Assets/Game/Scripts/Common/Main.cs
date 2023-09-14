@@ -10,6 +10,7 @@ using Utility.JsonUtil;
 using InGame.ForUnit;
 using InGame.ForUnit.Manage;
 using InGame.ForCam;
+using InGame.ForAbility;
 
 namespace InGame
 {
@@ -50,6 +51,12 @@ namespace InGame
             // Camera Setting
             _camController.OnInit(unit);
             _camController.ChangeToCamState(CamController.ECamState.Follow_Unit);
+
+            // [TEST]
+            var speedValue = AbilityManager.GetValue(EAbilityType.Speed);
+            Debug.Log($"Speed Value 1 : {speedValue}");
+            AbilityManager.SetValue(EAbilityType.Speed, 10f);
+            Debug.Log($"Speed Value 2 : {AbilityManager.GetValue(EAbilityType.Speed)}");
 
             yield return null;
         }
