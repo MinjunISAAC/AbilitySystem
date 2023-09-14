@@ -43,7 +43,7 @@ namespace Utility.JsonUtil
             }
         }
 
-        public static DefaultDataSet GetLocaleDataSet()
+        public static DefaultDataSet GetAbilityDefaultDataSet()
         {
             if (_dataSet == null)
                 return null;

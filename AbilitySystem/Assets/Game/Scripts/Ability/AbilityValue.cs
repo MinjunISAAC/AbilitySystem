@@ -39,6 +39,7 @@ namespace InGame.ForAbility
         // Functions - Nomal
         // --------------------------------------------------
         // ----- Public
-        public void Change(float value) { Value = value; }
+        public void Set   (float value) { Value = value;        }
+        public void Revert()            { Value = _originValue; }
     }
 }
