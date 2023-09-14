@@ -52,9 +52,6 @@ namespace InGame
             _camController.OnInit(unit);
             _camController.ChangeToCamState(CamController.ECamState.Follow_Unit);
 
-            // [TEST]
-            var speedValue = AbilityManager.GetValue(EAbilityType.Speed);
-            Debug.Log($"Speed Value 1 : {speedValue}");
             yield return null;
         }
     }

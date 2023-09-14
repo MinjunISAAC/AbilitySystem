@@ -15,11 +15,13 @@ namespace InGame.ForBuff
         // --------------------------------------------------
         // Components
         // --------------------------------------------------
-        [SerializeField] private EAbilityType _buffType = EAbilityType.Unknown;
+        [SerializeField] private EAbilityType   _buffType = EAbilityType.Unknown;
+        [SerializeField] private ParticleSystem _buffFx   = null;
 
         // --------------------------------------------------
         // Properties
         // --------------------------------------------------
-        public EAbilityType BuffType => _buffType;
+        public EAbilityType   BuffType => _buffType;
+        public ParticleSystem BuffFx   => _buffFx;
     }
 }

@@ -63,6 +63,10 @@ namespace InGame.ForUnit
                     case EAbilityType.Speed: UnitBuffEvent.OnBuffSpeed(); break;
                     case EAbilityType.Size : UnitBuffEvent.OnBuffSize();  break;
                 }
+
+                buffItem.BuffFx.Play();
+                buffItem.BuffFx.transform.SetParent(null);
+                buffItem.gameObject.SetActive(false);
             }
         }
 
