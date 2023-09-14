@@ -60,6 +60,9 @@ namespace InGame.ForUnit.Manage
             // Unit Animate 초기화
             _joyPad.onMouseDownEvent += () => { ChangeToUnitState(Unit.EState.Run);  };
             _joyPad.onMouseUpEvent   += () => { ChangeToUnitState(Unit.EState.Idle); };
+
+            // Unit Ability 초기화
+
             return _targetUnit;
         }
 
@@ -81,6 +84,8 @@ namespace InGame.ForUnit.Manage
 
             _joyPad.OnInit           (_targetUnit);
             _joyPad.UsedJoyStickEvent(true);
+
+            UsedJoyPad(true);
         }
 
         public void ChangeUnitSpeed(float moveSpeed, float roatateSpeed = ROTATE_VALUE)

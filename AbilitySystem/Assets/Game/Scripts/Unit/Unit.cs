@@ -32,10 +32,14 @@ namespace InGame.ForUnit
         // --------------------------------------------------
         // Variables
         // --------------------------------------------------
+        // ----- Const
+        private const float SIZE_DURATION = 1f;
+        
         // ----- Private
         private EState    _state           = EState.Unknown;
 
         private Coroutine _co_CurrentState = null;
+        private Coroutine _co_SizeChange   = null;
 
         // --------------------------------------------------
         // Properties
@@ -46,10 +50,11 @@ namespace InGame.ForUnit
         // --------------------------------------------------
         // Functions - Nomal
         // --------------------------------------------------
+        // ----- State (Public)
         public void ChangeToUnitState(EState unitState, Action doneCallBack = null)
             => _ChangeToUnitState(unitState, doneCallBack);
 
-        // ---- State 
+        // ----- State (Private)
         private void _ChangeToUnitState(EState unitState, Action doneCallBack = null)
         {
             if (!Enum.IsDefined(typeof(EState), unitState))
@@ -83,9 +88,17 @@ namespace InGame.ForUnit
             _co_CurrentState = StartCoroutine(_Co_Run(doneCallBack));
         }
 
+        // ----- Public
+        public void SizeChange(float value, Action doneCallBack)
+        {
+            if (_co_SizeChange == null)
+                _co_SizeChange = StartCoroutine(_Co_SizeChange(value, doneCallBack));
+        }
+
         // --------------------------------------------------
         // Functions - Coroutine
         // --------------------------------------------------
+        // ----- State
         private IEnumerator _Co_Idle(Action doneCallBack = null)
         {
             _animator.SetTrigger("Idle");
@@ -106,6 +119,26 @@ namespace InGame.ForUnit
             {
                 yield return null;
             }
+
+            doneCallBack?.Invoke();
+        }
+
+        // ----- Option
+        private IEnumerator _Co_SizeChange(float value, Action doneCallBack)
+        {
+            var sec       = 0.0f;
+            var startSize = transform.localScale;
+            var endSize   = new Vector3(value, value, value);
+
+            while (sec < SIZE_DURATION)
+            {
+                sec += Time.deltaTime;
+
+                transform.localScale = Vector3.Lerp(startSize, endSize, sec / SIZE_DURATION);
+                yield return null;
+            }
+
+            transform.localScale = endSize;
 
             doneCallBack?.Invoke();
         }
