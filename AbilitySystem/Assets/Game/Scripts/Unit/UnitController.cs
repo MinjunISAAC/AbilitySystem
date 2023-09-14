@@ -1,7 +1,5 @@
 // ----- C#
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
 // ----- Unity
 using UnityEngine;
@@ -30,12 +28,8 @@ namespace InGame.ForUnit.Manage
         // --------------------------------------------------
         // Variables
         // --------------------------------------------------
-        // ----- Const
-        private const float ROTATE_VALUE = 0.5f;
-
         // ----- Private
         private Unit  _targetUnit    = null;
-        private float _unitMoveValue = 0.0f;
 
         // --------------------------------------------------
         // Property
@@ -72,6 +66,7 @@ namespace InGame.ForUnit.Manage
             _ChangeUnitScale(defaultSize, null);
 
             // Unit Buff ÃÊ±âÈ­
+            _buffSystem.OnInit();
             UnitBuffEvent.onBuffSpeed += () => _BuffToSpeed();
             UnitBuffEvent.onBuffSize  += () => _BuffToSize ();
 

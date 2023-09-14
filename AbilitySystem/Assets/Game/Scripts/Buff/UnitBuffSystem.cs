@@ -1,9 +1,13 @@
-using InGame.ForAbility;
-using InGame.ForUnit;
+// ----- C#
 using System;
 using System.Collections;
-using System.Collections.Generic;
+
+// ----- Unity
 using UnityEngine;
+
+// ----- User Defined
+using InGame.ForAbility;
+using InGame.ForBuff.ForUI;
 
 namespace InGame.ForBuff
 {
@@ -30,16 +34,24 @@ namespace InGame.ForBuff
         // --------------------------------------------------
         // Functions - Nomal
         // --------------------------------------------------
+        public void OnInit() { _unitBuffView.OnInit(); }
+        
         public void BuffToSpeed()
         {
             if(_co_SpeedBuff == null)
+            {
                 _co_SpeedBuff = StartCoroutine(_Co_Buff(EAbilityType.Speed, _speedUpValue, () => { _co_SpeedBuff = null; }));
+                _unitBuffView.ShowToBuffItemView(EAbilityType.Speed, _buffDuration, null);
+            }
         }
 
         public void BuffToSize(Action doneCallBack) 
         {
             if (_co_SizeBuff == null)
+            {
                 _co_SizeBuff = StartCoroutine(_Co_Buff(EAbilityType.Size, _sizeUpValue, () => { doneCallBack();  _co_SizeBuff = null; }));
+                _unitBuffView.ShowToBuffItemView(EAbilityType.Size, _buffDuration, null);
+            }
         }
 
         // --------------------------------------------------
@@ -48,23 +60,13 @@ namespace InGame.ForBuff
 
         private IEnumerator _Co_Buff(EAbilityType type, float buffValue, Action doneCallBack)
         {
-            var startTime = Time.time;
-            var endTime   = Time.time + _buffDuration;
-
-            Debug.Log($"In Game");
             AbilityManager.SetValue(type, buffValue);
 
-            while (Time.time < endTime)
-            {
-                // UI Ç¥Çö
-
-                yield return null;
-            }
+            yield return new WaitForSeconds(_buffDuration);
 
             AbilityManager.RevertValue(type);
 
             doneCallBack?.Invoke();
-            yield return null;
         }
     }
 }
