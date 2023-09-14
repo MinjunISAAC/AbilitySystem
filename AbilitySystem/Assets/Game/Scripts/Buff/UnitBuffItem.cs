@@ -10,7 +10,7 @@ using InGame.ForAbility;
 
 namespace InGame.ForBuff
 {
-    public class BuffItem : MonoBehaviour
+    public class UnitBuffItem : MonoBehaviour
     {
         // --------------------------------------------------
         // Components

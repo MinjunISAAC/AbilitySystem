@@ -1,4 +1,5 @@
 // ----- C#
+using InGame.ForAbility;
 using System;
 
 // ----- Unity
@@ -19,8 +20,6 @@ namespace InGame.ForUnit.Manage.ForUI
         [SerializeField] private RectTransform _stickRect         = null;    
 
         [Header("Origin Move Speed")]
-        [Range(0f, 50f)]
-        [SerializeField] private float         _originMoveValue   = 1f; 
         [Range(0f, 1f)]
         [SerializeField] private float         _originRotateValue = 1f;    
 
@@ -32,28 +31,18 @@ namespace InGame.ForUnit.Manage.ForUI
         private Vector3 _movePos        = new Vector3();
 
         private float   _joyStickRadius = 0.0f;
-        private float   _moveSpeed      = 0.0f;
         private float   _rotateSpeed    = 0.0f;
-        private float   _moveFactor     = 1f;
 
         private bool    _isDragging     = false;
 
         // --------------------------------------------------
         // Property
         // --------------------------------------------------
-        public float         MoveSpeed => _moveSpeed;
         public RectTransform FrameRect => _frameRect;
 
         // --------------------------------------------------
         // Move Factors Event
         // --------------------------------------------------
-        public event Action<float, float> OnChangeMoveFactorsEvent;
-        public void ChangeMoveFactors(float moveSpeed, float rotateSpeed)
-        {
-            if (OnChangeMoveFactorsEvent != null)
-                OnChangeMoveFactorsEvent(moveSpeed, rotateSpeed);
-        }
-
         public event Action<bool> OnUsedJoyStickEvent;
         public void UsedJoyStickEvent(bool isUsed)
         {
@@ -132,22 +121,19 @@ namespace InGame.ForUnit.Manage.ForUI
                 return;
 
             _targetUnit  = targetUnit;
-            _moveSpeed   = _originMoveValue;
             _rotateSpeed = _originRotateValue;
 
-            OnChangeMoveFactorsEvent += (moveSpeed, rotateSpeed) => { _moveSpeed = moveSpeed; _rotateSpeed             = rotateSpeed;                           };
-            OnUsedJoyStickEvent      += (isUsed)                 => { _isActived = isUsed;    _stickRect.localPosition = Vector2.zero; _movePos = Vector3.zero; };
+            OnUsedJoyStickEvent += (isUsed) => { _isActived = isUsed;    _stickRect.localPosition = Vector2.zero; _movePos = Vector3.zero; };
         }
 
-        public void SetSpeed(float speed) => _moveSpeed = speed;
-        
         // ----- Private
         private void _OnTouch(Vector2 touchVec)
         {
             Vector2 vec       = new Vector2(touchVec.x - _frameRect.position.x, touchVec.y - _frameRect.position.y);
             Vector2 vecNormal = vec.normalized;
-            Vector3 force     = new Vector3(vecNormal.x, 0f, vecNormal.y) * _moveSpeed * _moveFactor * 2.5f;
+            Vector3 force     = new Vector3(vecNormal.x, 0f, vecNormal.y) * AbilityManager.GetValue(EAbilityType.Speed) * 3f;
 
+            Debug.Log($"Speed Value : {AbilityManager.GetValue(EAbilityType.Speed)}");
             _stickRect.localPosition = Vector2.ClampMagnitude(vec, _joyStickRadius);
 
             if (_isDragging) _targetUnit.UnitRigidBody.velocity = force;

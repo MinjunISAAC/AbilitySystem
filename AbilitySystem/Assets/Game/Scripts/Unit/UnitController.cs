@@ -8,6 +8,8 @@ using UnityEngine;
 
 // ----- User Defined
 using InGame.ForUnit.Manage.ForUI;
+using InGame.ForAbility;
+using InGame.ForBuff;
 
 namespace InGame.ForUnit.Manage
 {
@@ -16,11 +18,14 @@ namespace InGame.ForUnit.Manage
         // --------------------------------------------------
         // Components
         // --------------------------------------------------
-        [Header("Joy Pad")]
-        [SerializeField] private JoyPad _joyPad = null;
+        [Header("1. Joy Pad")]
+        [SerializeField] private JoyPad         _joyPad            = null;
 
-        [Header("Unit Collection")]
-        [SerializeField] private Transform _unitCreateParents = null;
+        [Header("2. Tranfrom Group")]
+        [SerializeField] private Transform      _unitCreateParents = null;
+
+        [Header("3. Unit Buff System")]
+        [SerializeField] private UnitBuffSystem _buffSystem        = null;
 
         // --------------------------------------------------
         // Variables
@@ -55,13 +60,20 @@ namespace InGame.ForUnit.Manage
             if (spawnTrans != null)
                 _targetUnit.transform.position = spawnTrans.position;
 
-            SetJoyPad();
+            // Joy Pad 초기화
+            _SetJoyPad();
 
             // Unit Animate 초기화
             _joyPad.onMouseDownEvent += () => { ChangeToUnitState(Unit.EState.Run);  };
             _joyPad.onMouseUpEvent   += () => { ChangeToUnitState(Unit.EState.Idle); };
 
             // Unit Ability 초기화
+            var defaultSize  = AbilityManager.GetValue(EAbilityType.Size);
+            _ChangeUnitScale(defaultSize, null);
+
+            // Unit Buff 초기화
+            UnitBuffEvent.onBuffSpeed += () => _BuffToSpeed();
+            UnitBuffEvent.onBuffSize  += () => _BuffToSize ();
 
             return _targetUnit;
         }
@@ -74,7 +86,9 @@ namespace InGame.ForUnit.Manage
             _targetUnit.ChangeToUnitState(unitState, doneCallBack);
         }
 
-        public void SetJoyPad()
+
+        // ----- Private
+        private void _SetJoyPad()
         {
             if (_targetUnit == null)
             {
@@ -85,20 +99,35 @@ namespace InGame.ForUnit.Manage
             _joyPad.OnInit           (_targetUnit);
             _joyPad.UsedJoyStickEvent(true);
 
-            UsedJoyPad(true);
+            _UsedJoyPad(true);
         }
 
-        public void ChangeUnitSpeed(float moveSpeed, float roatateSpeed = ROTATE_VALUE)
+        private void _ChangeUnitScale(float value, Action doneCallBack)
         {
-            _unitMoveValue = moveSpeed;
-            _joyPad.ChangeMoveFactors(moveSpeed, roatateSpeed);
+            _targetUnit.SizeChange(value, doneCallBack);
         }
 
-        public void UsedJoyPad(bool isOn)
+        private void _UsedJoyPad(bool isOn)
         {
             _joyPad.UsedJoyStickEvent(isOn);
 
             if (!isOn) _joyPad.FrameRect.gameObject.SetActive(isOn);
         }
+
+        private void _BuffToSpeed() => _buffSystem.BuffToSpeed();
+        private void _BuffToSize() 
+        {
+            _buffSystem.BuffToSize
+            (
+                () =>
+                {
+                    var buffValue = AbilityManager.GetValue(EAbilityType.Size);
+                    _targetUnit.SizeChange(buffValue, null);
+                }
+            );
+
+            var buffValue = AbilityManager.GetValue(EAbilityType.Size);
+            _targetUnit.SizeChange(buffValue, null);
+        } 
     }
 }

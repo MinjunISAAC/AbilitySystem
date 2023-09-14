@@ -6,6 +6,10 @@ using System.Collections.Generic;
 // ----- Unity
 using UnityEngine;
 
+// ----- User Defined
+using InGame.ForBuff;
+using InGame.ForAbility;
+
 namespace InGame.ForUnit
 {
     public class Unit : MonoBehaviour
@@ -33,7 +37,7 @@ namespace InGame.ForUnit
         // Variables
         // --------------------------------------------------
         // ----- Const
-        private const float SIZE_DURATION = 1f;
+        private const float SIZE_DURATION = 0.25f;
         
         // ----- Private
         private EState    _state           = EState.Unknown;
@@ -46,6 +50,23 @@ namespace InGame.ForUnit
         // --------------------------------------------------
         public Rigidbody UnitRigidBody => _rigidBody;
         public EState    UnitState     => _state;
+
+        // --------------------------------------------------
+        // Functions - Event
+        // --------------------------------------------------
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent<UnitBuffItem>(out UnitBuffItem buffItem))
+            {
+
+                Debug.Log($"In!!! buffItem {buffItem}");
+                switch (buffItem.BuffType)
+                {
+                    case EAbilityType.Speed: UnitBuffEvent.OnBuffSpeed(); break;
+                    case EAbilityType.Size : UnitBuffEvent.OnBuffSize();  break;
+                }
+            }
+        }
 
         // --------------------------------------------------
         // Functions - Nomal
@@ -91,6 +112,9 @@ namespace InGame.ForUnit
         // ----- Public
         public void SizeChange(float value, Action doneCallBack)
         {
+            if (transform.localScale.x == value)
+                return;
+
             if (_co_SizeChange == null)
                 _co_SizeChange = StartCoroutine(_Co_SizeChange(value, doneCallBack));
         }
@@ -141,6 +165,8 @@ namespace InGame.ForUnit
             transform.localScale = endSize;
 
             doneCallBack?.Invoke();
+
+            _co_SizeChange = null;
         }
     }
 }

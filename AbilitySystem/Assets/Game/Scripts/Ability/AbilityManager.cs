@@ -28,10 +28,10 @@ namespace InGame.ForAbility
             _SetAbilityValue(type, value);
         }
 
-        public static void RevertValue()
+        public static void RevertValue(EAbilityType type)
         {
             _LoadToDefaultValue();
-            _SetAbilityValue(EAbilityType.Unknown, -1, true);
+            _SetAbilityValue(type, -1, true);
         }
 
         public static float GetValue(EAbilityType type)

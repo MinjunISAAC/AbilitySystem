@@ -55,9 +55,6 @@ namespace InGame
             // [TEST]
             var speedValue = AbilityManager.GetValue(EAbilityType.Speed);
             Debug.Log($"Speed Value 1 : {speedValue}");
-            AbilityManager.SetValue(EAbilityType.Speed, 10f);
-            Debug.Log($"Speed Value 2 : {AbilityManager.GetValue(EAbilityType.Speed)}");
-
             yield return null;
         }
     }
