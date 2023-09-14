@@ -28,10 +28,10 @@ namespace InGame.ForUnit
         // Components
         // --------------------------------------------------
         [Header("Physic Group")]
-        [SerializeField] private Rigidbody _rigidBody = null;
+        [SerializeField] private Rigidbody      _rigidBody = null;
         
         [Header("Animate Group")]
-        [SerializeField] private Animator  _animator  = null;
+        [SerializeField] private Animator       _animator  = null;
 
         // --------------------------------------------------
         // Variables
@@ -58,8 +58,6 @@ namespace InGame.ForUnit
         {
             if (other.TryGetComponent<UnitBuffItem>(out UnitBuffItem buffItem))
             {
-
-                Debug.Log($"In!!! buffItem {buffItem}");
                 switch (buffItem.BuffType)
                 {
                     case EAbilityType.Speed: UnitBuffEvent.OnBuffSpeed(); break;

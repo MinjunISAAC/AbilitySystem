@@ -36,10 +36,11 @@ namespace InGame.ForBuff
         // --------------------------------------------------
         public void OnInit() { _unitBuffView.OnInit(); }
         
-        public void BuffToSpeed()
+        public void BuffToSpeed(Action tryAction = null)
         {
             if(_co_SpeedBuff == null)
             {
+                tryAction?.Invoke();
                 _co_SpeedBuff = StartCoroutine(_Co_Buff(EAbilityType.Speed, _speedUpValue, () => { _co_SpeedBuff = null; }));
                 _unitBuffView.ShowToBuffItemView(EAbilityType.Speed, _buffDuration, null);
             }
